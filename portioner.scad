@@ -10,8 +10,9 @@ moveCutoff=-1 * actualCylinderHeight / 2 - extensionForHoldingClamps + (cutoffHe
 function CalculateRadius(height, expectedVolume) = sqrt(expectedVolume/(PI * height));
 function CalculateHeight(radius, expectedVolume) = expectedVolume / (PI * radius * radius);
 function CalculateVolume(g) = g / sugarDensity;
+function CalculateSphereVolume(r) = (4/3) * PI * r * r * r;
 
-Portioner(3.8);
+Portioner(8);
 
 module Portioner(gramms)
 {
@@ -103,26 +104,49 @@ module PortionerCap(gramms, width)
             cube([2,4,6], center=true);
 }
 
+module SugarChamberSphericBottom()
+{
+    expectedVolume = CalculateVolume(gramms);
+    defaultHeight = portionerRadius * 2 * 0.75;
+    
+    radiusByVolume = CalculateRadius(height=defaultHeight, expectedVolume=expectedVolume);
+    radius = min(max(radiusByVolume, sugarChamberMinRadius), sugarChamberMaxRadius);
+    
+    bottomHalfSphereVolume = CalculateSphereVolume(radius) / 2;
+    cylinderVolume = expectedVolume - bottomHalfSphereVolume;
+        
+    height = CalculateHeight(radius, cylinderVolume);
+    
+    makeSureTheCylinderPiercesTheTop = portionerRadius;
+    moveSugarChamber = radius /* to have the tip of the sphere on 0|0 */
+                       - radius/2 - height/2 /* because the sphere-cylinder union is not center=true it is already halfway in the portioner cylinder */
+                       - tolerance;
+    
+    echo(str("radius: ", radius, " cylinder-height: ", height, " expected-volume: ", expectedVolume, " cylinder-volume: ", cylinderVolume, " half-sphere-volume: ", bottomHalfSphereVolume));
+    
+    translate([0, 0, moveSugarChamber])
+    union()
+    {
+        cylinder(h=height + makeSureTheCylinderPiercesTheTop, r=radius, center=false);
+        sphere(r=radius);
+    }
+}
+
 module SugarChamber(gramms)
 {
     expectedVolume = CalculateVolume(gramms);
-    echo(expectedVolume);
-    defaultHeight = portionerRadius * 2 * 0.9;
+    defaultHeight = portionerRadius * 2 * 0.75;
     
     radiusByVolume = CalculateRadius(height=defaultHeight, expectedVolume=expectedVolume);
-    
     radius = min(max(radiusByVolume, sugarChamberMinRadius), sugarChamberMaxRadius);
     height = CalculateHeight(radius, expectedVolume);
     
-    makeSureTheCylinderPiercesTheTop = 100;
-    moveSugarChamber = portionerRadius / 2 - height / 2 - tolerance;
+    makeSureTheCylinderPiercesTheTop = portionerRadius;
+    moveSugarChamber = (height / 2 + tolerance) - height;
     
     echo(str("radius: ", radius, " height: ", height));
     
     translate([0, 0, moveSugarChamber])
         cylinder(h=height + makeSureTheCylinderPiercesTheTop, r=radius, center=false);
-    
-    // ToDo: make botton of cylinder a half sphere to be able to use greater
-    //       values for the height without piercing the edges of the cylinder
 }
 

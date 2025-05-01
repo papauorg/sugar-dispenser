@@ -14,16 +14,21 @@ module DispenserBody()
 
 module FunnelToBottle()
 {
-    translate([0,0,intersectionHeight / 1.5 * -1])
+    funnelPartHeight = 15;
+    bottlePartHeight = 10;
+    
+    moveWholeFunnel = (intersectionHeight / 2) + (funnelPartHeight / 2);
+    
+    translate([0,0,moveWholeFunnel * -1])
     union() {
         difference() {
-            cylinder(h=15, r1=bottleOuterDiameter / 2, r2 = verticalOuterDiameter / 2, center=true);
-            cylinder(h=15.1, r1=bottleInnerDiameter / 2 - wallThickness, r2 = sugarChamberMaxRadius * 1.10, center=true);
+            cylinder(h=funnelPartHeight, r1=bottleOuterDiameter / 2, r2 = verticalOuterDiameter / 2, center=true);
+            cylinder(h=funnelPartHeight + 0.1, r1=bottleInnerDiameter / 2 - wallThickness, r2 = sugarChamberMaxRadius * 1.10, center=true);
         }
         translate([0,0,-12.5])
         difference() {
-            cylinder(h=10, r=bottleInnerDiameter / 2, center=true);
-            cylinder(h=10.1, r=bottleInnerDiameter / 2 - wallThickness, center=true);
+            cylinder(h=bottlePartHeight, r=bottleInnerDiameter / 2, center=true);
+            cylinder(h=bottlePartHeight + 0.1, r=bottleInnerDiameter / 2 - wallThickness, center=true);
         }
     }
     
@@ -44,11 +49,12 @@ module CylinderIntersection() {
             {
                 cylinder(h=dispenserChamberHeight, r=dispenserChamberOuterDiameter / 2, center=true);
                 
+                // stoppers
                 translate([-3.1, dispenserChamberOuterDiameter / 2 -tolerance, verticalOuterDiameter/2 - tolerance])
-                    cube([2, 11, 5+tolerance]);
+                    cube([2, 11, 5 + tolerance]);
                 
-                translate([-3.1, dispenserChamberOuterDiameter / 2 -tolerance -40, verticalOuterDiameter/2 - tolerance])
-                    cube([2, 11, 5+tolerance]);
+                translate([-3.1, (dispenserChamberOuterDiameter / -2) -5 + tolerance, verticalOuterDiameter/2 - tolerance])
+                    cube([2, 5, 5 + tolerance]);
             }
             
             // sugar-channel
@@ -57,10 +63,6 @@ module CylinderIntersection() {
                 cylinder(h=intersectionHeight, r=verticalOuterDiameter/2, center=true);
                 FunnelToMaxRadiusBelowThread();
             }
-            
-            //FunnelToMaxRadiusBelowThread();
-     
-
         }
         union() {
             // Dispenserchamber

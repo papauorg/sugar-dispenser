@@ -3,7 +3,7 @@ use <threadlib/threadlib.scad>
 $fn=100;
 
 // settings
-dispenserChamberOuterDiameter = 35;
+dispenserChamberOuterDiameter = 45;
 verticalOuterDiameter = 32;
 wallThickness = 2;
 bottleOuterDiameter = 29;
@@ -12,8 +12,8 @@ dispenserFont = "DejaVu Sans:style=Bold";
 tolerance = 0.2;
 
 //sugarChamberMaxRadius = ((dispenserChamberOuterDiameter / 2 - 2 * wallThickness) - tolerance);
-sugarChamberMaxRadius = 10;
-sugarChamberMinRadius = 3;
+sugarChamberMaxRadius = 12;
+sugarChamberMinRadius = 5;
 
 // calculated values
 intersectionHeight = dispenserChamberOuterDiameter + 10;
