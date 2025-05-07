@@ -19,6 +19,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Make scripts executable
+        run: chmod +x .devcontainer/installLibraries.sh ./build.sh
+
       - name: Build base Docker image
         run: |
           docker build -t papauorg/sugar-dispenser:base -f .devcontainer/Dockerfile .
