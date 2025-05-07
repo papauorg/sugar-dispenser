@@ -25,7 +25,7 @@ jobs:
 
       - name: Run build script in final image
         run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace papauorg/sugar-dispenser:latest bash ./build.sh
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace papauorg/sugar-dispenser:base bash -c "./.devcontainer/installLibraries.sh && ./build.sh"
 
   release:
     name: Create Release
