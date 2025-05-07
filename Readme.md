@@ -23,3 +23,6 @@ The sugar dispenser is designed to be screwed on a PET bottle and does not have 
 
 # Contribute
 For further dispenser sizes just extend the above table. For other contributions the OpenSCAD files are part of the repository.
+
+For easy setup you can use the devcontainer provided. It has all the necessary libraries and openscad installed. All you need is docker installed and visual studio code to get started. Of course you can also use openSCAD directly if you prefer. For this you need to install the libraries from here: [installLibraries.sh](./.devcontainer/installLibraries.sh)
+
