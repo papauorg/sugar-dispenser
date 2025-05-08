@@ -1,4 +1,4 @@
-[![GitHub license](https://img.shields.io/github/license/papauorg/sugar-dispenser)](https://github.com/papauorg/sugar-dispenser/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/papauorg/sugar-dispenser)](https://github.com/papauorg/sugar-dispenser/blob/main/LICENSE)
 ![Happy Brewing](https://img.shields.io/badge/Levelmeter-Happy%20Brewing-%23FBB117)
 
 This repository contains a model for a sugar dispenser. This is especially useful for homebrewers who want to do carbonization of their beer with sugar in bottles. For this different models for different amounts of sugar are available.
